@@ -1,7 +1,7 @@
 import pygame
 import math
 import time
-import utils
+
 
 pygame.init() # Initialize Pygame
 screen = pygame.display.set_mode((640, 480)) # Create a window of 640x480 pixels
@@ -24,6 +24,20 @@ color_secondary = "#E936A4"
 color_tertiary = "#FFCFB7"
 color_black = "#25201E"
 color_white = "#FFFFFF"
+
+#Creates an arrow or clock hand. It is shaped like a triangle with a circle portraied on the top part of the arrow.
+def custom_arrow(width, height, color):
+    arrow_surface = pygame.Surface((width, height), pygame.SRCALPHA)
+    triangle_points = [(width/2, height), # Top point
+                       (width*0.60, 0+(height/2)+6), # Right point
+                       (width*0.30, 0+height/2+6) ] # Left point
+    circle_centerpoint = ((width/2,height*0.8))
+    pygame.draw.polygon(arrow_surface, color, triangle_points)
+    pygame.draw.circle(arrow_surface, color, circle_centerpoint,width*0.25)
+    return arrow_surface
+
+
+#####################################################################################################################################################
 
 # Make sure the window stays open until the user closes it
 run_flag = True
@@ -60,7 +74,7 @@ while run_flag is True:
         rotated_rect = rotated_ellipse.get_rect(center=(x_c - math.cos(angle_radians)*(radius), y_c - math.sin(angle_radians)*(radius)))
         screen.blit(rotated_ellipse,rotated_rect)
         angle_degree += 40
-        
+
 #####################################################################################################################################################
 
     #Create outside border of clock:
@@ -122,7 +136,7 @@ while run_flag is True:
     #print(f"hour: {current_time_hour}, degree: {angle_degree_arrow_one}")
     arrow_one_width = 20
     arrow_one_height = 125
-    arrow_one_surface = utils.custom_arrow(arrow_one_width, arrow_one_height, color_black)
+    arrow_one_surface = custom_arrow(arrow_one_width, arrow_one_height, color_black)
 
     rotated_arrow_one_surface = pygame.transform.rotate(arrow_one_surface, -(angle_degree_arrow_one))
     rotated_arrow_one_rect = rotated_arrow_one_surface.get_rect(center=centerPoint)
@@ -132,7 +146,7 @@ while run_flag is True:
     #Arrow two (min)
     arrow_two_width = 20
     arrow_two_height = 175
-    arrow_two_surface = utils.custom_arrow(arrow_two_width, arrow_two_height, color_black)
+    arrow_two_surface = custom_arrow(arrow_two_width, arrow_two_height, color_black)
 
     rotated_arrow_two_surface = pygame.transform.rotate(arrow_two_surface, -(angle_degree_arrow_two))
     rotated_arrow_two_rect = rotated_arrow_two_surface.get_rect(center=centerPoint)
@@ -142,7 +156,7 @@ while run_flag is True:
     #Arrow tree (seconds)    
     arrow_three_width = 5
     arrow_three_height = 175
-    arrow_three_surface = utils.custom_arrow(arrow_three_width, arrow_three_height, color_primary)
+    arrow_three_surface = custom_arrow(arrow_three_width, arrow_three_height, color_primary)
 
     rotated_arrow_three_surface = pygame.transform.rotate(arrow_three_surface, -(angle_degree_arrow_three))
     rotated_arrow_three_rect = rotated_arrow_three_surface.get_rect(center=centerPoint)
@@ -152,3 +166,6 @@ while run_flag is True:
 #####################################################################################################################################################
 
     pygame.display.flip() # Refresh the screen so drawing appears
+
+
+
